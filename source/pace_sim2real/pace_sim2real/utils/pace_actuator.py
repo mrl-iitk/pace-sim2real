@@ -13,6 +13,14 @@ if TYPE_CHECKING:
 
 
 class PaceDCMotor(DCMotor):
+    """The Pace DC Motor actuator model with encoder bias and action delay.
+
+    We model the joint position that the PD actuator gets by adding an encoder bias term to the true joint position.
+    Essentially, the actuator commands in the encoder frame and not the true joint frame.
+
+    Unfortunately, delayed PD actuator is inheriting from IdealPDActuator and not DCMotor.
+    Thus, we need to re-implement the delay buffer logic here again. Sorry for the duplicate code.
+    """
 
     cfg: PaceDCMotorCfg
 
