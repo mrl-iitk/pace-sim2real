@@ -36,6 +36,7 @@ from pace_sim2real.utils import project_root
 from pace_sim2real import CMAESOptimizer
 
 
+
 def main():
     """Zero actions agent with Isaac Lab environment."""
     # parse configuration
@@ -58,7 +59,7 @@ def main():
     data_file = project_root() / "data" / env_cfg.sim2real.data_dir
     log_dir = project_root() / "logs" / "pace" / env_cfg.sim2real.robot_name
 
-    data = torch.load(data_file)
+    data = torch.load("/home/tarun/Desktop/pace-sim2real/data/anymal_d_sim/chirp_data.pt")
     time_data = data["time"].to(env.unwrapped.device)
     target_dof_pos = data["des_dof_pos"].to(env.unwrapped.device)
     measured_dof_pos = data["dof_pos"].to(env.unwrapped.device)
