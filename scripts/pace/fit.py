@@ -1,7 +1,3 @@
-# © 2025 ETH Zurich, Robotic Systems Lab
-# Author: Filip Bjelonic
-# Licensed under the Apache License 2.0
-
 """Script to run an environment with zero action agent."""
 
 """Launch Isaac Sim Simulator first."""
@@ -13,7 +9,7 @@ from isaaclab.app import AppLauncher
 # add argparse arguments
 parser = argparse.ArgumentParser(description="Pace agent for Isaac Lab environments.")
 parser.add_argument("--num_envs", type=int, default=4096, help="Number of environments to simulate.")
-parser.add_argument("--task", type=str, default="Isaac-Pace-Anymal-D-v0", help="Name of the task.")
+parser.add_argument("--task", type=str, default="Isaac-Pace-SingleActuator-v0", help="Name of the task.")
 # append AppLauncher cli args
 AppLauncher.add_app_launcher_args(parser)
 # parse the arguments
@@ -59,7 +55,7 @@ def main():
     data_file = project_root() / "data" / env_cfg.sim2real.data_dir
     log_dir = project_root() / "logs" / "pace" / env_cfg.sim2real.robot_name
 
-    data = torch.load("/home/tarun/Desktop/pace-sim2real/data/anymal_d_sim/chirp_data.pt")
+    data = torch.load("PT_files/newdata3.pt")
     time_data = data["time"].to(env.unwrapped.device)
     target_dof_pos = data["des_dof_pos"].to(env.unwrapped.device)
     measured_dof_pos = data["dof_pos"].to(env.unwrapped.device)
@@ -100,6 +96,7 @@ def main():
             counter += 1
             if counter % 400 == 0:
                 print(f"[INFO]: Step {counter * sim_dt:.1f} / {time_data[-1]:.1f} seconds ({counter / time_steps * 100:.1f} %)")
+                #pass
             if counter >= time_steps:
                 print("[INFO]: Reached the end of the trajectory, exiting.")
                 counter = 0
@@ -119,3 +116,4 @@ if __name__ == "__main__":
     main()
     # close sim app
     simulation_app.close()
+
